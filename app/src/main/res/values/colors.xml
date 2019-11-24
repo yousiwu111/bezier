@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="yellow">#a78e5b</color>
+    <color name="yellow1">#A68D5B</color>
+    <color name="progress_unreach">#262C3B</color>
+    <color name="equalizer_background">#262C3B</color>
+</resources>
