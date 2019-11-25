@@ -24,7 +24,7 @@ public class ProgressBar extends View {
     private int mStepNum = 20;//一共有20步
     private int mStepPerSize;//一步的长度
     private int lineHeight;
-    private int currentStep = 1;
+    private int currentStep = 3;
     private int mWidth;
     private int mHeight;
     private Path mPath;
@@ -33,6 +33,21 @@ public class ProgressBar extends View {
 
     public ProgressBar(Context context) {
         this(context, null);
+    }
+
+    public void setCurrentStep(int currentStep) {
+        if (currentStep<=0){
+            this.currentStep =0;
+        }else if (currentStep>20){
+            this.currentStep = 20;
+        }else {
+            this.currentStep = currentStep;
+        }
+        invalidate();
+    }
+
+    public int getCurrentStep() {
+        return currentStep;
     }
 
     public ProgressBar(Context context, @Nullable AttributeSet attrs) {
@@ -47,14 +62,14 @@ public class ProgressBar extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
 
         unReachPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        unReachPaint.setColor(getResources().getColor(R.color.progress_unreach));
+        unReachPaint.setColor(Color.parseColor("#43403d"));
         unReachPaint.setStyle(Paint.Style.STROKE);
         unReachPaint.setStrokeCap(Paint.Cap.ROUND);
 
         circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setColor(getResources().getColor(R.color.yellow));
         circlePaint.setStyle(Paint.Style.FILL);
-        lineHeight = DisplayUtils.dp2px(getContext(), 6);
+        lineHeight = DisplayUtils.dp2px(getContext(), 4);
         currentPoint = new PointF();
     }
 

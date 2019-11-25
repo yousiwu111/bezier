@@ -5,6 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="yellow">#a78e5b</color>
     <color name="yellow1">#A68D5B</color>
-    <color name="progress_unreach">#262C3B</color>
+    <color name="progress_unreach">#d6cfc0</color>
     <color name="equalizer_background">#262C3B</color>
 </resources>

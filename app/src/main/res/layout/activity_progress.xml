@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <com.zkl.bezier.ProgressBar
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="18dp"/>
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/mReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="15dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/icon_euqualizer_reset" />
+        </FrameLayout>
+
+        <com.zkl.bezier.ProgressBar
+            android:id="@+id/mProgressBar"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:id="@+id/mBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:padding="15dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/icon_euqualizer_back" />
+        </FrameLayout>
+
+    </LinearLayout>
 </LinearLayout>

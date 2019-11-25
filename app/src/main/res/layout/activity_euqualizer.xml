@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/mTabLayout"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            app:tabTextColor="#43403d"
+            android:layout_marginBottom="45dp"
+            app:tabSelectedTextColor="@color/yellow"
+            android:layout_height="50dp"
+            app:tabMode="fixed"
+            app:tabIndicatorHeight="4dp"
+            app:tabTextAppearance="@style/text"
+            app:tabIndicator="@color/yellow"
+            app:tabIndicatorColor="@color/yellow" >
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:text="PRESET"
+                android:layout_height="match_parent"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:text="CUSTOM"
+                android:layout_height="match_parent"/>
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llProgressBar"
+            android:layout_above="@+id/mTabLayout"
+            android:layout_marginBottom="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/mReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_euqualizer_reset" />
+            </FrameLayout>
+
+            <com.zkl.bezier.ProgressBar
+                android:id="@+id/mProgressBar"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_weight="1" />
+
+            <FrameLayout
+                android:id="@+id/mBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/icon_euqualizer_back" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_above="@+id/llProgressBar"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="20HZ"
+                android:textColor="@color/yellow"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="110HZ"
+                android:textColor="@color/yellow"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="630HZ"
+                android:textColor="@color/yellow"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="3.5kHZ"
+                android:textColor="@color/yellow"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="20kHZ"
+                android:textColor="@color/yellow"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <com.zkl.bezier.EuqualizerView
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:background="@android:color/black" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
