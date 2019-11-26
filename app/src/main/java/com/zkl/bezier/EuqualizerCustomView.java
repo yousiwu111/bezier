@@ -20,7 +20,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-public class EuqualizerView extends View {
+public class EuqualizerCustomView extends View {
 
     private Path mPath;
     private Paint mPaint;
@@ -49,15 +49,15 @@ public class EuqualizerView extends View {
     private PathMeasure mPathMeasure;
     private PathMeasure mPathMeasure2;
 
-    public EuqualizerView(Context context) {
+    public EuqualizerCustomView(Context context) {
         this(context, null);
     }
 
-    public EuqualizerView(Context context, @Nullable AttributeSet attrs) {
+    public EuqualizerCustomView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public EuqualizerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EuqualizerCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

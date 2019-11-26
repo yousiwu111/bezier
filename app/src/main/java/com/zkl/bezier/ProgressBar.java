@@ -36,11 +36,11 @@ public class ProgressBar extends View {
     }
 
     public void setCurrentStep(int currentStep) {
-        if (currentStep<=0){
-            this.currentStep =0;
-        }else if (currentStep>20){
+        if (currentStep <= 0) {
+            this.currentStep = 0;
+        } else if (currentStep > 20) {
             this.currentStep = 20;
-        }else {
+        } else {
             this.currentStep = currentStep;
         }
         invalidate();
@@ -98,7 +98,7 @@ public class ProgressBar extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        mStepPerSize = (mWidth-mHeight) / mStepNum;
+        mStepPerSize = (mWidth - mHeight) / mStepNum;
     }
 
     @Override
@@ -109,10 +109,10 @@ public class ProgressBar extends View {
         unReachPaint.setStrokeWidth(lineHeight);
 //        mPath.addRect(0,0,mWidth,mHeight, Path.Direction.CW);
         canvas.drawLine(mHeight / 2, mHeight / 2, mWidth - mHeight, mHeight / 2, mPaint);
-        float cx = currentStep * mStepPerSize +mHeight/2;
+        float cx = currentStep * mStepPerSize + mHeight / 2;
         currentPoint.x = cx;
         currentPoint.y = mHeight / 2;
-        if (currentStep!=20) {
+        if (currentStep != 20) {
             canvas.drawLine(currentPoint.x + mHeight / 2, currentPoint.y, mWidth - mHeight, mHeight / 2, unReachPaint);
         }
         canvas.drawCircle(cx, mHeight / 2, DisplayUtils.dp2px(getContext(), 9), circlePaint);
@@ -127,7 +127,7 @@ public class ProgressBar extends View {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 //判断是否点击在圆内
-                if (findStepByX(x)==currentStep) {
+                if (findStepByX(x) == currentStep) {
                     Log.d("debug", "触摸在范围内");
                     isInner = true;
                 } else {
@@ -140,9 +140,9 @@ public class ProgressBar extends View {
                 if (isInner) {
                     currentStep = findStepByX(x);
                     invalidate();
-                    if (lastStep!=currentStep) {//防止频繁回调
+                    if (lastStep != currentStep) {//防止频繁回调
                         Toast.makeText(getContext(), "current" + currentStep, Toast.LENGTH_SHORT).show();
-                        lastStep= currentStep;
+                        lastStep = currentStep;
                     }
                 }
                 break;
@@ -155,13 +155,13 @@ public class ProgressBar extends View {
 
     private int findStepByX(int x) {
         if (x < mHeight) {
-            Log.d("debug","0");
+            Log.d("debug", "0");
             return 0;
         } else if (x > mWidth - mHeight) {
-            Log.d("debug","20");
+            Log.d("debug", "20");
             return 20;
         } else {
-            Log.d("debug",""+(x - mHeight / 2) / mStepPerSize);
+            Log.d("debug", "" + (x - mHeight / 2) / mStepPerSize);
             return (x - mHeight / 2) / mStepPerSize;
         }
     }

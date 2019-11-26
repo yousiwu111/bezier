@@ -1,44 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:layout_above="@+id/mTabLayout"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/mTabLayout"
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            app:tabTextColor="#43403d"
-            android:layout_marginBottom="45dp"
-            app:tabSelectedTextColor="@color/yellow"
-            android:layout_height="50dp"
-            app:tabMode="fixed"
-            app:tabIndicatorHeight="4dp"
-            app:tabTextAppearance="@style/text"
-            app:tabIndicator="@color/yellow"
-            app:tabIndicatorColor="@color/yellow" >
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:text="PRESET"
-                android:layout_height="match_parent"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:text="CUSTOM"
-                android:layout_height="match_parent"/>
-        </com.google.android.material.tabs.TabLayout>
-
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/llProgressBar"
-            android:layout_above="@+id/mTabLayout"
             android:layout_marginBottom="55dp"
             android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -81,7 +59,9 @@
             android:layout_above="@+id/llProgressBar"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_marginBottom="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="35dp"
             android:layout_height="wrap_content">
 
             <TextView
@@ -127,7 +107,7 @@
 
 
         </LinearLayout>
-        <com.zkl.bezier.EuqualizerView
+        <com.zkl.bezier.EuqualizerCustomView
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="380dp"
@@ -136,4 +116,28 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mTabLayout"
+        android:layout_width="match_parent"
+        app:tabTextColor="#43403d"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="45dp"
+        app:tabSelectedTextColor="@color/yellow"
+        android:layout_height="50dp"
+        app:tabMode="fixed"
+        app:tabIndicatorHeight="4dp"
+        app:tabTextAppearance="@style/text"
+        app:tabIndicator="@color/yellow"
+        app:tabIndicatorColor="@color/yellow" >
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:text="PRESET"
+            android:layout_height="match_parent"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:text="CUSTOM"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.tabs.TabLayout>
+
+</RelativeLayout>

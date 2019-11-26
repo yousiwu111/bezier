@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class TestActivity extends Activity implements EuqualizerView.updateDecibelListener {
+public class TestActivity extends Activity implements EuqualizerCustomView.updateDecibelListener {
 
-    private EuqualizerView mView;
+    private EuqualizerCustomView mView;
     private TextView textView;
     private Button button;
 
