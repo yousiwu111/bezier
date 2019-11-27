@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="55dp"
+            android:layout_marginBottom="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -63,12 +63,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/llProgressBar"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal">
 
             <TextView
@@ -120,9 +121,10 @@
         </LinearLayout>
 
         <com.zkl.bezier.EuqualizerCustomView
+            android:layout_above="@+id/llUnit"
             android:id="@+id/mCustomView"
             android:layout_width="match_parent"
-            android:layout_height="380dp" />
+            android:layout_height="match_parent" />
 
 
     </RelativeLayout>

@@ -133,6 +133,7 @@ public class EuqualizerCustomView extends View {
         mHeight = h;
         stepVertical = mHeight / STEP_VERTICAL_TWENTY;    //-10到10共20份
         centerPointY = stepVertical * STEP_VERTICAL_TWENTY / 2;
+        Log.d("debug","宽度："+mWidth+",高度："+mHeight+",中间坐标："+centerPointY+",垂直的高度均分20份每份："+stepVertical);
     }
 
     @Override
@@ -199,16 +200,17 @@ public class EuqualizerCustomView extends View {
                 if (index != 0) {
                     STATE_NOW = STATE_TOUCH_MOVE;
                     pointsArray[index].y += deltaY;
-                    if (y <= normalBitmapWidth/2)
-                        pointsArray[index].y = normalBitmapWidth/2;
-                    if (y >= mHeight - normalBitmapWidth/2)
-                        pointsArray[index].y = mHeight - normalBitmapWidth/2;
+                    if (y <= stepVertical/2)
+                        pointsArray[index].y = stepVertical/2;
+                    if (y >= mHeight - stepVertical/2)
+                        pointsArray[index].y = mHeight - stepVertical/2;
                     int theDecibel = getTheDecibel(pointsArray[index].y);
                     if (listener != null && theDecibel != decibelArray[index - 1]) {
-                        listener.updateDecibel(decibelArray);
                         decibelArray[index - 1] = theDecibel;
+                        listener.updateDecibel(decibelArray);
                     }
-                    invalidate();
+                    Log.d("debug","y:"+pointsArray[index].y+",index："+theDecibel+",小圆长度："+normalBitmapWidth);
+                    invalidate();//宽度：720,高度：760,中间坐标：380.0,垂直的高度均分20份每份：38.0
                 }
                 break;
             }
@@ -258,12 +260,12 @@ public class EuqualizerCustomView extends View {
      * @return
      */
     private int getTheDecibel(float y) {
-        if (y >= mHeight - 40)
+        if (y >= getHeight() - stepVertical/2)
             return -10;
-        else if (y <= 40)
+        else if (y <= stepVertical)
             return 10;
         else
-            return 11 - Math.round(y / stepVertical);
+            return 10 - Math.round(y / stepVertical);
     }
 
 

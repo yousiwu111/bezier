@@ -98,7 +98,6 @@ public class EuqualizerActivity extends Activity implements View.OnClickListener
                 System.arraycopy(decibels, 0, ints, 0, decibels.length);
                 stepRecords.add(ints);
                 mProgressBar.setCurrentStep(mProgressBar.getCurrentStep() + 1);
-                Toast.makeText(EuqualizerActivity.this, "stepRecords的大小："+stepRecords.size(), Toast.LENGTH_SHORT).show();
                 String data ="";
                 for (int a:decibels){
                     data +="   "+a;
