@@ -6,12 +6,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
 public class EuqualizerPreSetView extends View {
+
+    private OnModeCheckListener mOnModeCheckListener;
 
     private int mWidth, mHeight;
     private int heightItem;//每行的高度
@@ -27,6 +30,12 @@ public class EuqualizerPreSetView extends View {
     //选中状态的圆
     private Paint checkedCirclePaint;
 
+    private int currentMode = 0;
+    private int touchIndex = -1;
+
+    public void setOnModeCheckListener(OnModeCheckListener mOnModeCheckListener) {
+        this.mOnModeCheckListener = mOnModeCheckListener;
+    }
 
     public EuqualizerPreSetView(Context context) {
         this(context, null);
@@ -53,7 +62,7 @@ public class EuqualizerPreSetView extends View {
         normalTextPaint.setTextSize(DisplayUtils.dp2px(getContext(), 18));
 
         checkedTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        checkedTextPaint.setStyle(Paint.Style.STROKE);
+        checkedTextPaint.setStyle(Paint.Style.FILL);
         checkedTextPaint.setStrokeWidth(DisplayUtils.dp2px(getContext(), 1));
         checkedTextPaint.setColor(Color.parseColor("#0f0f0f"));
         checkedTextPaint.setTextSize(DisplayUtils.dp2px(getContext(), 18));
@@ -123,9 +132,9 @@ public class EuqualizerPreSetView extends View {
         points[4].radius = heightItem / 3;
         points[5].pointF.y = (heightItem * 2) + heightItem / 2;
         points[5].radius = heightItem / 2;
-        points[6].pointF.y = (heightItem * 3) + heightItem / 2;
+        points[6].pointF.y = (heightItem * 3) + heightItem / 2 - DisplayUtils.dp2px(getContext(), 1);
         points[6].radius = heightItem / 2;
-        points[7].pointF.y = (heightItem * 3) + heightItem / 2;
+        points[7].pointF.y = (heightItem * 3) + heightItem / 2 - DisplayUtils.dp2px(getContext(), 1);
         points[7].radius = heightItem / 3;
     }
 
@@ -136,19 +145,57 @@ public class EuqualizerPreSetView extends View {
             canvas.drawCircle(points[i].pointF.x, points[i].pointF.y, points[i].radius, circlePaint);
             float width = normalTextPaint.measureText(contents[i]);
             Paint.FontMetrics fontMetrics = normalTextPaint.getFontMetrics();
-            canvas.drawText(contents[i], points[i].pointF.x - width / 2, points[i].pointF.y + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom, normalTextPaint);
+            if (currentMode == i) {
+                //选中的
+                canvas.drawCircle(points[i].pointF.x, points[i].pointF.y, points[i].radius, checkedCirclePaint);
+                canvas.drawText(contents[i], points[i].pointF.x - width / 2, points[i].pointF.y + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom, checkedTextPaint);
+            } else {
+                canvas.drawText(contents[i], points[i].pointF.x - width / 2, points[i].pointF.y + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom, normalTextPaint);
+            }
         }
     }
+
+    private long currentTime = 0;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
+                touchIndex = getTouchIndex(x, y);
+                currentTime = System.currentTimeMillis();
+                break;
+            case MotionEvent.ACTION_UP:
+                float x1 = event.getX();
+                float y1 = event.getY();
+                if (Math.abs(x - x1) <= 10 && Math.abs(y - y1) <= 0) {
+                    if ((System.currentTimeMillis() - currentTime) < 500) {
+                        if (touchIndex != -1 && currentMode != touchIndex) {
+                            currentMode = touchIndex;
+                            invalidate();
+                            if (mOnModeCheckListener != null) {
+                                mOnModeCheckListener.onModeChecked(currentMode);
+                            }
+                        }
+                    }
+                }
                 break;
         }
         return true;
+    }
+
+    private int getTouchIndex(float x, float y) {
+        for (int i = 0; i < points.length; i++) {
+            PointF pointF = points[i].pointF;
+            if (x > (pointF.x - points[i].radius) && x < (pointF.x + points[i].radius) && y > (pointF.y - points[i].radius) && y < (pointF.y + points[i].radius)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public interface OnModeCheckListener {
+        void onModeChecked(int position);
     }
 }

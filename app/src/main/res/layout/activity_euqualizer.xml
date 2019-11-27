@@ -7,17 +7,24 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_above="@+id/mTabLayout"
-        android:visibility="gone"
+        android:id="@+id/rlCustom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/mTabLayout"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/yellow" />
 
         <LinearLayout
             android:id="@+id/llProgressBar"
-            android:layout_marginBottom="55dp"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="55dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -56,88 +63,101 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_above="@+id/llProgressBar"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/llProgressBar"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="35dp"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:text="20HZ"
                 android:textColor="@color/yellow"
-                android:gravity="center_horizontal"
-                android:textSize="16dp"
-                android:layout_height="wrap_content"/>
+                android:textSize="16dp" />
+
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:text="110HZ"
                 android:textColor="@color/yellow"
-                android:gravity="center_horizontal"
-                android:textSize="16dp"
-                android:layout_height="wrap_content"/>
+                android:textSize="16dp" />
+
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:text="630HZ"
                 android:textColor="@color/yellow"
-                android:gravity="center_horizontal"
-                android:textSize="16dp"
-                android:layout_height="wrap_content"/>
+                android:textSize="16dp" />
+
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:text="3.5kHZ"
                 android:textColor="@color/yellow"
-                android:gravity="center_horizontal"
-                android:textSize="16dp"
-                android:layout_height="wrap_content"/>
+                android:textSize="16dp" />
+
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:text="20kHZ"
                 android:textColor="@color/yellow"
-                android:gravity="center_horizontal"
-                android:textSize="16dp"
-                android:layout_height="wrap_content"/>
+                android:textSize="16dp" />
 
 
         </LinearLayout>
+
         <com.zkl.bezier.EuqualizerCustomView
-            android:id="@+id/view"
+            android:id="@+id/mCustomView"
             android:layout_width="match_parent"
-            android:layout_height="380dp"
-            android:background="@android:color/black" />
+            android:layout_height="380dp" />
 
 
     </RelativeLayout>
+
+    <com.zkl.bezier.EuqualizerPreSetView
+        android:id="@+id/mEuqualizerPreSetView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/mTabLayout"
+        android:layout_marginBottom="20dp" />
 
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/mTabLayout"
         android:layout_width="match_parent"
-        app:tabTextColor="#43403d"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="45dp"
-        app:tabSelectedTextColor="@color/yellow"
-        android:layout_height="50dp"
-        app:tabMode="fixed"
-        app:tabIndicatorHeight="4dp"
-        app:tabTextAppearance="@style/text"
         app:tabIndicator="@color/yellow"
-        app:tabIndicatorColor="@color/yellow" >
+        app:tabIndicatorColor="@color/yellow"
+        app:tabIndicatorHeight="4dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/yellow"
+        app:tabTextAppearance="@style/text"
+        app:tabTextColor="#43403d">
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:text="PRESET"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:text="PRESET" />
+
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:text="CUSTOM"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:text="CUSTOM" />
     </com.google.android.material.tabs.TabLayout>
 
 </RelativeLayout>

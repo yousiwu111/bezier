@@ -18,24 +18,35 @@ import androidx.annotation.Nullable;
 
 public class ProgressBar extends View {
 
+    private OnProgressChangeListener mOnProgressChangeListener;
+
     private Paint mPaint;
     private Paint circlePaint;
     private Paint unReachPaint;
     private int mStepNum = 20;//一共有20步
     private int mStepPerSize;//一步的长度
     private int lineHeight;
-    private int currentStep = 3;
+    private int currentStep = 0;
     private int mWidth;
     private int mHeight;
     private Path mPath;
     private PointF currentPoint;//当前圆的坐标
     private boolean isInner;
 
+    public void setOnProgressChangeListener(OnProgressChangeListener mOnProgressChangeListener) {
+        this.mOnProgressChangeListener = mOnProgressChangeListener;
+    }
+
+    public int getmStepNum() {
+        return mStepNum;
+    }
+
     public ProgressBar(Context context) {
         this(context, null);
     }
 
     public void setCurrentStep(int currentStep) {
+        if (this.currentStep == currentStep) return;
         if (currentStep <= 0) {
             this.currentStep = 0;
         } else if (currentStep > 20) {
@@ -107,7 +118,6 @@ public class ProgressBar extends View {
 
         mPaint.setStrokeWidth(lineHeight);
         unReachPaint.setStrokeWidth(lineHeight);
-//        mPath.addRect(0,0,mWidth,mHeight, Path.Direction.CW);
         canvas.drawLine(mHeight / 2, mHeight / 2, mWidth - mHeight, mHeight / 2, mPaint);
         float cx = currentStep * mStepPerSize + mHeight / 2;
         currentPoint.x = cx;
@@ -143,6 +153,9 @@ public class ProgressBar extends View {
                     if (lastStep != currentStep) {//防止频繁回调
                         Toast.makeText(getContext(), "current" + currentStep, Toast.LENGTH_SHORT).show();
                         lastStep = currentStep;
+                        if (mOnProgressChangeListener != null) {
+                            mOnProgressChangeListener.onChanged(lastStep);
+                        }
                     }
                 }
                 break;
@@ -164,6 +177,10 @@ public class ProgressBar extends View {
             Log.d("debug", "" + (x - mHeight / 2) / mStepPerSize);
             return (x - mHeight / 2) / mStepPerSize;
         }
+    }
+
+    public interface OnProgressChangeListener {
+        void onChanged(int currentStep);
     }
 }
 

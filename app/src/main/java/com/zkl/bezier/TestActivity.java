@@ -37,12 +37,14 @@ public class TestActivity extends Activity implements EuqualizerCustomView.updat
         });
     }
 
+    private int count = 0;
+
     @Override
     public void updateDecibel(int[] decibels) {
         String data ="";
         for (int a:decibels){
             data +="   "+a;
         }
-        textView.setText(data);
+        textView.setText(data+","+(++count));
     }
 }
