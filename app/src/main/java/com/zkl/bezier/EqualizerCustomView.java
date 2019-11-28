@@ -43,8 +43,9 @@ public class EqualizerCustomView extends View {
     private List<PathMeasure> pathMeasures = new ArrayList<>();
     private float centerPointY;//中间Y坐标
     private Paint mFillPaint;
+    private List<Path> paths = new ArrayList<>();
 
-    private int[] colors = {Color.rgb(166,141,91),Color.rgb(135,115,75),Color.rgb(120,103,67),Color.rgb(105,90,60),Color.rgb(90,78,52),Color.rgb(75,65,45),Color.rgb(60,52,37),Color.rgb(45,40,30),Color.rgb(30,27,22),Color.rgb(15,15,15)};
+    private int[] colors = {Color.rgb(166, 141, 91), Color.rgb(135, 115, 75), Color.rgb(120, 103, 67), Color.rgb(105, 90, 60), Color.rgb(90, 78, 52), Color.rgb(75, 65, 45), Color.rgb(60, 52, 37), Color.rgb(45, 40, 30), Color.rgb(30, 27, 22), Color.rgb(15, 15, 15)};
 
     public EqualizerCustomView(Context context) {
         this(context, null);
@@ -103,6 +104,9 @@ public class EqualizerCustomView extends View {
         linePaint.setStrokeWidth(DisplayUtils.dp2px(getContext(), 1));
         linePaint.setStyle(Paint.Style.STROKE);
 
+        for (int i = 0; i < STEP_VERTICAL_TWENTY / 2; i++) {
+            paths.add(new Path());
+        }
     }
 
     private int measureView(int measureSpec, int defaultSize) {
@@ -133,8 +137,10 @@ public class EqualizerCustomView extends View {
         mWidth = w;
         mHeight = h;
         stepVertical = mHeight / STEP_VERTICAL_TWENTY;    //-10到10共20份
-        centerPointY = stepVertical * STEP_VERTICAL_TWENTY / 2;
-        Log.d("debug","宽度："+mWidth+",高度："+mHeight+",中间坐标："+centerPointY+",垂直的高度均分20份每份："+stepVertical);
+        centerPointY = mHeight / 2;
+        pointsArray[0] = new PointF(0, centerPointY);
+        pointsArray[pointsArray.length - 1] = new PointF(mWidth, centerPointY);
+        Log.d("debug", "宽度：" + mWidth + ",高度：" + mHeight + ",中间坐标：" + centerPointY + ",垂直的高度均分20份每份：" + stepVertical);
     }
 
     @Override
@@ -142,8 +148,7 @@ public class EqualizerCustomView extends View {
         super.onDraw(canvas);
 
         int stepSize = mWidth / 6;//6段
-        pointsArray[0] = new PointF(0, centerPointY);
-        pointsArray[pointsArray.length - 1] = new PointF(mWidth, centerPointY);
+
 
         if ((STATE_NOW == STATE_NONE)) {
             for (int i = 1; i <= pointsArray.length - 2; i++) {
@@ -151,59 +156,26 @@ public class EqualizerCustomView extends View {
                 pointsArray[i] = new PointF(cx, cy);
             }
         }
+
         measurePath2();
 
-//        Path dst = new Path();
-//        dst.rLineTo(-2, centerPointY);
-//        if (pathMeasures.get(0).getSegment(0, pathMeasures.get(0).getLength(), dst, true)) {
-//                //绘制线
-//            mFillPaint.setColor(getColor());
-//            canvas.drawPath(dst, mFillPaint);
-//                canvas.drawPath(dst, linePaint);
-//            }
-//        Path dst2 = new Path();
-//        dst2.rLineTo(-2, centerPointY);
-//        if (pathMeasures.get(3).getSegment(0, pathMeasures.get(3).getLength(), dst2, true)) {
-//                //绘制线
-//            mFillPaint.setColor(getColor());
-//                canvas.drawPath(dst2, linePaint);
-//            canvas.drawPath(dst2,mFillPaint);
-//            }
         for (int i = 0; i < pathMeasures.size(); i++) {
-            Path path = new Path();
-            path.moveTo(-2,-2);
+            Path path = paths.get(i);
+            path.reset();
+            path.moveTo(-2, -2);
             path.rLineTo(-2, centerPointY);
             if (pathMeasures.get(i).getSegment(0, pathMeasures.get(i).getLength(), path, true)) {
                 //绘制线
                 mFillPaint.setColor(colors[i]);
                 canvas.drawPath(path, mFillPaint);
             }
-            if (i==0){
+            if (i == 0) {
                 //画中间线，否则一开始没有横线
                 canvas.drawPath(path, linePaint);
             }
         }
-//        for (int i = pathMeasures.size()-1; i >= 0; i--) {
-//            float[] pos = new float[2];
-//            pathMeasures.get(i).getPosTan(pathMeasures.get(i).getLength(), pos, null);
-//            //绘制阴影
-//            drawShadowArea(canvas, dst, pos);
-//        }
         refreshView(canvas, stepSize);
     }
-
-    private void drawShadowArea(Canvas canvas, Path dst, float[] pos) {
-        dst.lineTo(pos[0], pos[1]);
-//        dst.lineTo(defXAxis, defYAxis);
-        dst.close();
-        mFillPaint.setColor(getColor());
-        canvas.drawPath(dst, mFillPaint);
-    }
-
-    private int getColor(){
-        return colors[(int) (Math.random()*colors.length)];
-    }
-
 
     private void refreshView(Canvas canvas, int stepSize) {
         for (int i = 1; i <= pointsArray.length - 2; i++) {
@@ -241,16 +213,16 @@ public class EqualizerCustomView extends View {
                 if (index != 0) {
                     STATE_NOW = STATE_TOUCH_MOVE;
                     pointsArray[index].y += deltaY;
-                    if (y <= stepVertical/2)
-                        pointsArray[index].y = stepVertical/2;
-                    if (y >= mHeight - stepVertical/2)
-                        pointsArray[index].y = mHeight - stepVertical/2;
+                    if (y <= stepVertical / 2)
+                        pointsArray[index].y = stepVertical / 2;
+                    if (y >= mHeight - stepVertical / 2)
+                        pointsArray[index].y = mHeight - stepVertical / 2;
                     int theDecibel = getTheDecibel(pointsArray[index].y);
                     if (listener != null && theDecibel != decibelArray[index - 1]) {
                         decibelArray[index - 1] = theDecibel;
                         listener.updateDecibel(decibelArray);
                     }
-                    Log.d("debug","y:"+pointsArray[index].y+",index："+theDecibel+",小圆长度："+normalBitmapWidth);
+                    Log.d("debug", "y:" + pointsArray[index].y + ",index：" + theDecibel + ",小圆长度：" + normalBitmapWidth);
                     invalidate();//宽度：720,高度：760,中间坐标：380.0,垂直的高度均分20份每份：38.0
                 }
                 break;
@@ -301,7 +273,7 @@ public class EqualizerCustomView extends View {
      * @return
      */
     private int getTheDecibel(float y) {
-        if (y >= getHeight() - stepVertical/2)
+        if (y >= getHeight() - stepVertical / 2)
             return -10;
         else if (y <= stepVertical)
             return 10;
