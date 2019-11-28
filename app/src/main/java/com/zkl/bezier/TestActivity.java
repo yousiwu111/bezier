@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class TestActivity extends Activity implements EuqualizerCustomView.updateDecibelListener {
+public class TestActivity extends Activity implements EqualizerCustomView.updateDecibelListener {
 
-    private EuqualizerCustomView mView;
+    private EqualizerCustomView mView;
     private TextView textView;
     private Button button;
 
@@ -23,11 +23,11 @@ public class TestActivity extends Activity implements EuqualizerCustomView.updat
 
     private void init() {
         textView = (TextView) findViewById(R.id.tv1);
-        mView =  findViewById(R.id.view);
+        mView = findViewById(R.id.view);
 
         mView.setUpdateDecibelListener(this);
 
-        button= (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,10 +41,10 @@ public class TestActivity extends Activity implements EuqualizerCustomView.updat
 
     @Override
     public void updateDecibel(int[] decibels) {
-        String data ="";
-        for (int a:decibels){
-            data +="   "+a;
+        String data = "";
+        for (int a : decibels) {
+            data += "   " + a;
         }
-        textView.setText(data+","+(++count));
+        textView.setText(data + "," + (++count));
     }
 }

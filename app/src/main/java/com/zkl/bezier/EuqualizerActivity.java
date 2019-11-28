@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -24,8 +23,8 @@ public class EuqualizerActivity extends Activity implements View.OnClickListener
 
     private TabLayout mTabLayout;
     private RelativeLayout rlCustom;
-    private EuqualizerPreSetView mEuqualizerPreSetView;
-    private EuqualizerCustomView mCustomView;
+    private EqualizerPreSetView mEqualizerPreSetView;
+    private EqualizerCustomView mCustomView;
     private ProgressBar mProgressBar;
     private FrameLayout mReset, mBack;
     private TextView tv;
@@ -35,12 +34,12 @@ public class EuqualizerActivity extends Activity implements View.OnClickListener
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_euqualizer);
-        setIndicator((TabLayout) findViewById(R.id.mTabLayout), 12, 12);
+        setIndicator((TabLayout) findViewById(R.id.mTabLayout), 25, 25);
 
         tv = findViewById(R.id.tv);
         mTabLayout = findViewById(R.id.mTabLayout);
         rlCustom = findViewById(R.id.rlCustom);
-        mEuqualizerPreSetView = findViewById(R.id.mEuqualizerPreSetView);
+        mEqualizerPreSetView = findViewById(R.id.mEuqualizerPreSetView);
         mCustomView = findViewById(R.id.mCustomView);
         mProgressBar = findViewById(R.id.mProgressBar);
         mReset = findViewById(R.id.mReset);
@@ -57,11 +56,11 @@ public class EuqualizerActivity extends Activity implements View.OnClickListener
                 switch (tab.getPosition()) {
                     case 0:
                         rlCustom.setVisibility(View.GONE);
-                        mEuqualizerPreSetView.setVisibility(View.VISIBLE);
+                        mEqualizerPreSetView.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         rlCustom.setVisibility(View.VISIBLE);
-                        mEuqualizerPreSetView.setVisibility(View.GONE);
+                        mEqualizerPreSetView.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -88,21 +87,20 @@ public class EuqualizerActivity extends Activity implements View.OnClickListener
             }
         });
         //曲线监听
-        mCustomView.setUpdateDecibelListener(new EuqualizerCustomView.updateDecibelListener() {
+        mCustomView.setUpdateDecibelListener(new EqualizerCustomView.updateDecibelListener() {
             @Override
             public void updateDecibel(int[] decibels) {
                 if (stepRecords.size()>=20){
                     stepRecords.remove(0);
+                    mProgressBar.setCurrentStep(20);
+                }else if (stepRecords.size()==0){
+                    //如果没有记录，放入第一个位置的记录
+                    stepRecords.add(new int[]{0,0,0,0,0});
                 }
                 int[] ints = new int[decibels.length];
                 System.arraycopy(decibels, 0, ints, 0, decibels.length);
                 stepRecords.add(ints);
                 mProgressBar.setCurrentStep(mProgressBar.getCurrentStep() + 1);
-                String data ="";
-                for (int a:decibels){
-                    data +="   "+a;
-                }
-                tv.setText(data+",");
             }
         });
     }

@@ -5,14 +5,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -29,7 +26,6 @@ public class ProgressBar extends View {
     private int currentStep = 0;
     private int mWidth;
     private int mHeight;
-    private Path mPath;
     private PointF currentPoint;//当前圆的坐标
     private boolean isInner;
 
@@ -86,7 +82,6 @@ public class ProgressBar extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(measureView(widthMeasureSpec, 200), measureView(heightMeasureSpec, 5));
     }
 
@@ -133,7 +128,7 @@ public class ProgressBar extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        int x = (int) event.getX(), y = (int) event.getY();
+        int x = (int) event.getX();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 //判断是否点击在圆内
@@ -151,7 +146,6 @@ public class ProgressBar extends View {
                     currentStep = findStepByX(x);
                     invalidate();
                     if (lastStep != currentStep) {//防止频繁回调
-                        Toast.makeText(getContext(), "current" + currentStep, Toast.LENGTH_SHORT).show();
                         lastStep = currentStep;
                         if (mOnProgressChangeListener != null) {
                             mOnProgressChangeListener.onChanged(lastStep);

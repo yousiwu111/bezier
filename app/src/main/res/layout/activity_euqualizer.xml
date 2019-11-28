@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="#0F0F0F"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -120,7 +120,7 @@
 
         </LinearLayout>
 
-        <com.zkl.bezier.EuqualizerCustomView
+        <com.zkl.bezier.EqualizerCustomView
             android:layout_above="@+id/llUnit"
             android:id="@+id/mCustomView"
             android:layout_width="match_parent"
@@ -129,7 +129,7 @@
 
     </RelativeLayout>
 
-    <com.zkl.bezier.EuqualizerPreSetView
+    <com.zkl.bezier.EqualizerPreSetView
         android:id="@+id/mEuqualizerPreSetView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

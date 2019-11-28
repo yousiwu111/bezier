@@ -6,13 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class EuqualizerPreSetView extends View {
+public class EqualizerPreSetView extends View {
 
     private OnModeCheckListener mOnModeCheckListener;
 
@@ -37,15 +36,15 @@ public class EuqualizerPreSetView extends View {
         this.mOnModeCheckListener = mOnModeCheckListener;
     }
 
-    public EuqualizerPreSetView(Context context) {
+    public EqualizerPreSetView(Context context) {
         this(context, null);
     }
 
-    public EuqualizerPreSetView(Context context, @Nullable AttributeSet attrs) {
+    public EqualizerPreSetView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public EuqualizerPreSetView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EqualizerPreSetView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

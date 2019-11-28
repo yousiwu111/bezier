@@ -4,27 +4,26 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-public class EuqualizerCustomView extends View {
+import java.util.ArrayList;
+import java.util.List;
+
+public class EqualizerCustomView extends View {
 
     private Paint mPaint;
     private Paint nodePaint;
-    private Paint connectPaint;
     private int mWidth, mHeight;
     private PointF[] pointsArray;
     private final int STATE_NONE = 0;
@@ -43,16 +42,19 @@ public class EuqualizerCustomView extends View {
     private Paint linePaint = new Paint();
     private List<PathMeasure> pathMeasures = new ArrayList<>();
     private float centerPointY;//中间Y坐标
+    private Paint mFillPaint;
 
-    public EuqualizerCustomView(Context context) {
+    private int[] colors = {Color.rgb(166,141,91),Color.rgb(135,115,75),Color.rgb(120,103,67),Color.rgb(105,90,60),Color.rgb(90,78,52),Color.rgb(75,65,45),Color.rgb(60,52,37),Color.rgb(45,40,30),Color.rgb(30,27,22),Color.rgb(15,15,15)};
+
+    public EqualizerCustomView(Context context) {
         this(context, null);
     }
 
-    public EuqualizerCustomView(Context context, @Nullable AttributeSet attrs) {
+    public EqualizerCustomView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public EuqualizerCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EqualizerCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -79,16 +81,15 @@ public class EuqualizerCustomView extends View {
     public void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
+
+        //画触控点画笔
         nodePaint = new Paint();
         nodePaint.setAntiAlias(true);
-        nodePaint.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
-        nodePaint.setStrokeWidth(DisplayUtils.dp2px(getContext(), 3));
-        nodePaint.setStyle(Paint.Style.STROKE);
-        connectPaint = new Paint();
-        connectPaint.setAntiAlias(true);
-        connectPaint.setStrokeWidth(50);
-        connectPaint.setStyle(Paint.Style.FILL);
-        connectPaint.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
+
+        //填充画笔
+        mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mFillPaint.setStyle(Paint.Style.FILL);
+        mFillPaint.setColor(ContextCompat.getColor(getContext(), R.color.yellow));
 
         pointsArray = new PointF[7];
         decibelArray = new int[5];
@@ -152,15 +153,55 @@ public class EuqualizerCustomView extends View {
         }
         measurePath2();
 
-        Path dst = new Path();
-        dst.rLineTo(-2, centerPointY);
+//        Path dst = new Path();
+//        dst.rLineTo(-2, centerPointY);
+//        if (pathMeasures.get(0).getSegment(0, pathMeasures.get(0).getLength(), dst, true)) {
+//                //绘制线
+//            mFillPaint.setColor(getColor());
+//            canvas.drawPath(dst, mFillPaint);
+//                canvas.drawPath(dst, linePaint);
+//            }
+//        Path dst2 = new Path();
+//        dst2.rLineTo(-2, centerPointY);
+//        if (pathMeasures.get(3).getSegment(0, pathMeasures.get(3).getLength(), dst2, true)) {
+//                //绘制线
+//            mFillPaint.setColor(getColor());
+//                canvas.drawPath(dst2, linePaint);
+//            canvas.drawPath(dst2,mFillPaint);
+//            }
         for (int i = 0; i < pathMeasures.size(); i++) {
-            if (pathMeasures.get(i).getSegment(0, pathMeasures.get(i).getLength(), dst, true)) {
+            Path path = new Path();
+            path.moveTo(-2,-2);
+            path.rLineTo(-2, centerPointY);
+            if (pathMeasures.get(i).getSegment(0, pathMeasures.get(i).getLength(), path, true)) {
                 //绘制线
-                canvas.drawPath(dst, linePaint);
+                mFillPaint.setColor(colors[i]);
+                canvas.drawPath(path, mFillPaint);
+            }
+            if (i==0){
+                //画中间线，否则一开始没有横线
+                canvas.drawPath(path, linePaint);
             }
         }
+//        for (int i = pathMeasures.size()-1; i >= 0; i--) {
+//            float[] pos = new float[2];
+//            pathMeasures.get(i).getPosTan(pathMeasures.get(i).getLength(), pos, null);
+//            //绘制阴影
+//            drawShadowArea(canvas, dst, pos);
+//        }
         refreshView(canvas, stepSize);
+    }
+
+    private void drawShadowArea(Canvas canvas, Path dst, float[] pos) {
+        dst.lineTo(pos[0], pos[1]);
+//        dst.lineTo(defXAxis, defYAxis);
+        dst.close();
+        mFillPaint.setColor(getColor());
+        canvas.drawPath(dst, mFillPaint);
+    }
+
+    private int getColor(){
+        return colors[(int) (Math.random()*colors.length)];
     }
 
 
