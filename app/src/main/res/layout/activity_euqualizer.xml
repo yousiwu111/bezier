@@ -62,69 +62,17 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <com.zkl.bezier.EquipartitionTextView
             android:id="@+id/llUnit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/llProgressBar"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="30dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="20HZ"
-                android:textColor="@color/yellow"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="110HZ"
-                android:textColor="@color/yellow"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="630HZ"
-                android:textColor="@color/yellow"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="3.5kHZ"
-                android:textColor="@color/yellow"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="20kHZ"
-                android:textColor="@color/yellow"
-                android:textSize="16dp" />
-
-
-        </LinearLayout>
+            android:layout_height="25dp"
+            android:layout_above="@+id/llProgressBar" />
 
         <com.zkl.bezier.EqualizerCustomView
-            android:layout_above="@+id/llUnit"
             android:id="@+id/mCustomView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llUnit" />
 
 
     </RelativeLayout>

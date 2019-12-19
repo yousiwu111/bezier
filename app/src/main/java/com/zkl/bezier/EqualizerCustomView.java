@@ -136,7 +136,7 @@ public class EqualizerCustomView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        stepVertical = mHeight / STEP_VERTICAL_TWENTY;    //-10到10共20份
+        stepVertical = (mHeight-selectedBitmapWidth) / STEP_VERTICAL_TWENTY;    //-10到10共20份
         centerPointY = mHeight / 2;
         pointsArray[0] = new PointF(0, centerPointY);
         pointsArray[pointsArray.length - 1] = new PointF(mWidth, centerPointY);
@@ -152,7 +152,7 @@ public class EqualizerCustomView extends View {
 
         if ((STATE_NOW == STATE_NONE)) {
             for (int i = 1; i <= pointsArray.length - 2; i++) {
-                float cx = stepSize * i, cy = stepVertical * (-decibelArray[i - 1] + STEP_VERTICAL_TWENTY / 2);
+                float cx = stepSize * i, cy = stepVertical * (-decibelArray[i - 1] + STEP_VERTICAL_TWENTY / 2)+selectedBitmapWidth/2;
                 pointsArray[i] = new PointF(cx, cy);
             }
         }
@@ -273,12 +273,12 @@ public class EqualizerCustomView extends View {
      * @return
      */
     private int getTheDecibel(float y) {
-        if (y >= getHeight() - stepVertical / 2)
+        if (y >= getHeight() - stepVertical / 2-selectedBitmapWidth/2)
             return -10;
-        else if (y <= stepVertical)
+        else if (y <= stepVertical+selectedBitmapWidth/2)
             return 10;
         else
-            return 10 - Math.round(y / stepVertical);
+            return 10 - Math.round(y-selectedBitmapWidth/2 / stepVertical);
     }
 
 

@@ -103,6 +103,8 @@ public class EuqualizerActivity extends Activity implements View.OnClickListener
                 mProgressBar.setCurrentStep(mProgressBar.getCurrentStep() + 1);
             }
         });
+
+        mEqualizerPreSetView.setCurrentMode(3);
     }
 
 

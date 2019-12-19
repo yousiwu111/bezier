@@ -31,6 +31,8 @@ public class EqualizerPreSetView extends View {
 
     private int currentMode = 0;
     private int touchIndex = -1;
+    //大圆半径
+    private int bigCircleRadius;
 
     public void setOnModeCheckListener(OnModeCheckListener mOnModeCheckListener) {
         this.mOnModeCheckListener = mOnModeCheckListener;
@@ -47,6 +49,11 @@ public class EqualizerPreSetView extends View {
     public EqualizerPreSetView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    public void setCurrentMode(int currentMode) {
+        this.currentMode = currentMode;
+        invalidate();
     }
 
     private void init() {
@@ -106,35 +113,37 @@ public class EqualizerPreSetView extends View {
         mHeight = h;
         heightItem = mHeight / 4;
 
+        bigCircleRadius = Math.min(heightItem / 2, mWidth / 4);
+
         //计算8个圆的位置
         for (int i = 0; i < points.length; i++) {
             points[i] = new CircleRadiusPoint();
             points[i].pointF = new PointF();
             if (i % 2 == 0) {
-                points[i].pointF.x = mWidth / 4;
+                points[i].pointF.x = mWidth / 2 - bigCircleRadius;
             } else {
-                points[i].pointF.x = mWidth * 3 / 4;
+                points[i].pointF.x = mWidth / 2 + bigCircleRadius;
             }
         }
         for (int i = 0; i < points.length / 2; i++) {
             points[i].pointF.y = (heightItem * i) + heightItem / 2;
         }
         points[0].pointF.y = heightItem / 2 + DisplayUtils.dp2px(getContext(), 1);
-        points[0].radius = heightItem / 3;
+        points[0].radius = bigCircleRadius * 2 / 3;
         points[1].pointF.y = heightItem / 2 + DisplayUtils.dp2px(getContext(), 1);
-        points[1].radius = heightItem / 2;
+        points[1].radius = bigCircleRadius;
         points[2].pointF.y = heightItem + heightItem / 2;
-        points[2].radius = heightItem / 2;
+        points[2].radius = bigCircleRadius;
         points[3].pointF.y = heightItem + heightItem / 2;
-        points[3].radius = heightItem / 3;
+        points[3].radius = bigCircleRadius * 2 / 3;
         points[4].pointF.y = (heightItem * 2) + heightItem / 2;
-        points[4].radius = heightItem / 3;
+        points[4].radius = bigCircleRadius * 2 / 3;
         points[5].pointF.y = (heightItem * 2) + heightItem / 2;
-        points[5].radius = heightItem / 2;
+        points[5].radius = bigCircleRadius;
         points[6].pointF.y = (heightItem * 3) + heightItem / 2 - DisplayUtils.dp2px(getContext(), 1);
-        points[6].radius = heightItem / 2;
+        points[6].radius = bigCircleRadius;
         points[7].pointF.y = (heightItem * 3) + heightItem / 2 - DisplayUtils.dp2px(getContext(), 1);
-        points[7].radius = heightItem / 3;
+        points[7].radius = bigCircleRadius * 2 / 3;
     }
 
     @Override
